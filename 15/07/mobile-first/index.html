@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Mobile First</title>
+    <meta name="description" content="We're a bunch of guys working at vincoorbis doing front-end stuff
+">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel='stylesheet' href='/styles/vendor.css'>
+
+    <link rel='stylesheet' href='/styles/main.css'>
+    <link rel="canonical" href="http://zesk8.github.io/15/07/mobile-first">
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Frontend VO Blog</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 We're a bunch of guys working at vincoorbis doing front-end stuff
+                 <a id="a-icons" href="http://twitter.com/vincoorbis"><i class="fa fa-twitter"></i></a>
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+  
+  <h1 class="postTitle">Mobile First</h1>
+  <p class="meta">July 29, 2015 | <span class="time">7</span> Minute Read</p>
+
+  <p>There are plenty of posts talking about <em>mobile first</em> for years, but let&#39;s just review the main points of this topic.</p>
+
+<h3 id="why-mobile-first">Why mobile first?</h3>
+
+<p>So, basically mobile first tells us to design our applications and websites looking forward mobile devices as our priority. There are plenty of reasons, but lets just resume those on 3 main reasons</p>
+
+<ul>
+<li>Growth</li>
+<li>Restrictions</li>
+<li>Capabilities</li>
+</ul>
+
+<h4 id="growth">Growth</h4>
+
+<p>We could take some numbers and demonstrate you that mobile devices are all around, but you already know that, I mean, seriously, even your aunts have smartphones, and your little cousins have iPads at the age you used to have a stick and a rock.
+The mobile market has grown ridiculously from the last years.</p>
+
+<h4 id="restrictions">Restrictions</h4>
+
+<p><strong>Screen size</strong></p>
+
+<p>The size of the screen on mobile devices has been the big concern for all the people involved on a website. The first thing that comes to our mind, is the fact that with less screen size, we might have to sacrifice some information. And yes, that&#39;s exactly right.
+Think about all the stuff that is on your website, consider all navigation elements, irrelevant information, ads, secondary links, then you realize that a mobile first vision may be good to light your site.
+Having a mobile first vision, let you design your website focusing on what your customers/visitors really need, it forces you to prioritize the information of your site.</p>
+
+<p><strong>Performance</strong></p>
+
+<p>Although in the last years mobile networks have been evolving, there&#39;s still a difference with the internet connection of your home.
+Mobile networks can be very expensive on some areas and connections are still somehow slow.
+Designing mobile first, forces you to use a lot of techniques and tools to save the data plans of your customers/visitors. You don&#39;t want them to stop visiting your site because it&#39;s slow, do you?</p>
+
+<p>Some things you want to start doing or focus when developing an application/website, may include:</p>
+
+<ul>
+<li>Use sprites</li>
+<li>Concatenate and minify JS libraries and CSS.</li>
+<li>Use CSS 3</li>
+<li>Limit or remove JS libraries. Maybe you are just loading jQuery to make some tiny animation. Please don&#39;t.</li>
+</ul>
+
+<p>Maybe you want to check this out: <a href="http://youmightnotneedjquery.com/">http://youmightnotneedjquery.com/</a></p>
+
+<p><strong>Time and location</strong></p>
+
+<blockquote>
+<p>“[...] I like to imagine people as ‘one eyeball and one thumb`. One thumb because they are likely to be holding their mobile in one hand and using a single thumb to control it; one eyeball because in many locations where mobile devices are used we only have people’s partial attention”
+- Luke Wroblewski</p>
+</blockquote>
+
+<p><a href="http://www.lukew.com/about/">Luke Wroblewski</a> wrote this amazing statement on his book <a href="http://www.lukew.com/resources/mobile_first.asp">Mobile first</a></p>
+
+<p>Basically, this means that mobile users doesn&#39;t pay as much attention as a regular user. Time and location are some variables you have to struggle with.
+So, maybe you have to start thinking new ways to get the attention of a mobile user. You have to be flexible, for the guy that visits your site while watching TV and for the one that makes a quick visit from the toilet.</p>
+
+<h3 id="how-to">How to?</h3>
+
+<h4 id="content-over-navigation">Content over navigation</h4>
+
+<p>Let&#39;s take the mobile site of Youtube as an example. The first thing that Youtube shows, is the content you may be interested with. It shows you video recommendations based on the videos you watched earlier. Thats what Youtube wants you to focus in.
+Then they have the main and secondary navigation elements, but as you can see, those elements take the minimum space.</p>
+
+<p><img src="/images/mb-yt-content.png" alt="Youtube">  </p>
+
+<blockquote>
+<p><em>Youtube put its content first and make the navigation very simple</em>  </p>
+</blockquote>
+
+<p>Same thing with the Facebook site, a large percentage of the screen shows you the content of your news feed. The navigation icons and submenu take a small space of the screen.</p>
+
+<p><img src="/images/mb-fb-content.png" alt="Facebook Content">  </p>
+
+<blockquote>
+<p><em>Facebook shows you first the content, the navigation icons take a secondary role</em>  </p>
+</blockquote>
+
+<p><strong>Why is this important?</strong></p>
+
+<p>Well, as we talked about it earlier, you want your users to focus on the things your website provide. Facebook and Youtube run by the content, they want you to click a lot of links so they can learn about you and then show you the right ads.
+If you have a site that sells flight tickets, the first thing that you want your users see, maybe is the flight reservation form.</p>
+
+<h3 id="actions">Actions</h3>
+
+<p>Apple has a Human Interface Guideline. There they have some recommendations about the size of the buttons, for mobile devices, obviously.</p>
+
+<p><a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/">iOS Human Interface Guidelines</a></p>
+
+<p>But being just a little logical, we have to watch that the action buttons are good sized and good positioned so every user has easy access to them.</p>
+
+<p>Let&#39;s take Youtube as an example again.
+When you open a video, the main button is Play/Pause, which is the bigger part of the screen.
+Then you have secondary button actions, from where you can like/dislike a video, add it to your favourites, share it, or flag it.
+It&#39;s not a coincidence that those buttons are placed right there. Studies demonstrate that most of the people is right handed, and most of the people uses their smartphones scrolling with the right thumb.
+So, take a look to the screenshot, the share button is very reachable.</p>
+
+<p><img src="/images/mb-yt-video.png" alt="Youtube Video">  </p>
+
+<blockquote>
+<p><em>Action buttons are very reachable</em></p>
+</blockquote>
+
+<p>Obviously, Youtube knows that the regular user just watch videos, and they want them to share the content of their site.</p>
+
+<h3 id="nui">NUI</h3>
+
+<p>The Natural User Interface principles enable direct interactions with the content, and reduce all the elements that are no content at all.
+Mobile devices allows that things like gestures modify the way we explore the web. For example, the pinch gesture that allows you to zoom in or out. With that kind of gestures, you are saving yourself a button or other GUI element that explicitly do that action.</p>
+
+<p>Twitter has another good example, with the drag to refresh tweets gesture.</p>
+
+<h3 id="oh-the-hover">Oh, the hover</h3>
+
+<p>It&#39;s almost obvious that the hover effect won&#39;t work equally on a mobile device. Hey! you no longer have a mouse.
+Hover must be treated differently on mobile devices, since we are looking for a different experience.</p>
+
+<p>Your options:</p>
+
+<ul>
+<li>Have it on screen</li>
+<li>Tap or swipe</li>
+<li>Separate screen</li>
+<li>Disappear</li>
+</ul>
+
+<p>To choose an option, first you have to think if that thing that the hover does is really special.
+If it is important, well,  maybe you have to make them static for the mobile experience and keep it on the screen.</p>
+
+<p>Your other option is to show it on tap or swipe. That&#39;s a good one for actions or submenus that are important keeping them statics will mean a huge load of elements on first look.</p>
+
+<p>If the content of the hover is too big, maybe the best idea is to keep it on a different page.</p>
+
+<p>And lastly but not least, maybe you want to consider to disappear the content of the hover, you know, if its not very relevant.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Mobile first is not new at all. I decided to write this post because in my professional life, I still see how designers forget the mobile experience or they take for granted that using Twitter Bootstrap or ZURB Foundation they  have a mobile site guaranteed.
+Maybe its hard to move from designing for Desktop to designing for mobile, but its proven that there are more advantages adopting a mobile first vision.</p>
+
+<p>If you want to learn more about this topic, I highly recommend you to read the book Luke Wroblewski wrote. This post is a resume I made by reading his book, its simply awesome how your design vision of a site changes after reading it.</p>
+
+<p>You should also follow him on twitter ( <a href="https://twitter.com/lukew">@lukew</a> ) he posts good tips about mobile interfaces and experiences.</p>
+
+
+  <!-- POST NAVIGATION -->
+  <div class="postNav clearfix">
+    
+      <a class="prev" href="/15/07/nodejs-and-iojs-with-nvm"><span>&laquo;&nbsp;Managing node.js and io.js with nvm</span>
+      
+    </a>
+    
+    
+      <a class="next" href="/15/08/quick-start-with-electron"><span>Quick start with Electron&nbsp;&raquo;</span>
+      
+      </a>
+    
+  </div>
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2015 <a href="http://vincoorbis.com">vinco orbis</a><br>
+        Powered by <a href="http://jekyllrb.com">Jekyll</a><br>
+        <a href="http://brianmaierjr.com/long-haul/">Long Haul theme</a></p>
+      <p class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br>
+        This work is licensed under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br>
+
+      <div class="footer-links">
+         <ul class="noList">
+            
+            
+            
+
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- end .footer -->
+<script src='/scripts/vendor.js'></script>
+
+<script src='/scripts/main.js'></script>
+
+
+</body>
+
+</html>

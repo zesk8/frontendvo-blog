@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Nightwatch.js</title>
+    <meta name="description" content="We're a bunch of guys working at vincoorbis doing front-end stuff
+">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel='stylesheet' href='/styles/vendor.css'>
+
+    <link rel='stylesheet' href='/styles/main.css'>
+    <link rel="canonical" href="http://zesk8.github.io/15/07/nightwatch">
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Frontend VO Blog</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 We're a bunch of guys working at vincoorbis doing front-end stuff
+                 <a id="a-icons" href="http://twitter.com/vincoorbis"><i class="fa fa-twitter"></i></a>
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+  
+  <h1 class="postTitle">Nightwatch.js</h1>
+  <p class="meta">July 16, 2015 | <span class="time">3</span> Minute Read</p>
+
+  <p>Not long ago I started using <a href="http://nightwatchjs.org/">Nightwatch.js</a> as a testing framework. Previously I had only tried <a href="http://casperjs.org/">Casper.js</a>  but once I made my first test, I was convinced to use Nightwatch in my upcoming developments. But what is the difference between Nightwatch and Casper? Well, both provide a simple syntax as well as methods to make assertions and methods for performing commands (expect some element to be visible, click an item, etc.), both are well documented, but what makes the difference for me is that Casper makes use of <a href="http://phantomjs.org/">Phantom.js</a> to run the test while Nightwatch makes use of <a href="http://www.seleniumhq.org/">Selenium</a>.</p>
+
+<p>Selenium and Phantom.js both have the same purpose (automated browsers), but Selenium provides the advantage of running the test in real browsers, which is very useful when you want to test your application to have consistency between browsers and on different operating systems.</p>
+
+<p>But, what exactly is Nightwatch.js?</p>
+
+<p><em>&quot;Nightwatch is a framework written in Node.js for End-to-End testing. It uses Selenium WebDriver to run tests on the browser&quot;</em></p>
+
+<p>Well, now we can do a little test to see how Nightwatch works, but before that we need to have installed java and Nightwatch through npm:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>npm install nightwatch -g
+</code></pre></div>
+<p>The basic structure we need is:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">├── bin/
+|   └── selenium-server-standalone-{VERSION}.jar
+├── tests/
+|   └── test.js
+└── nightwatch.json
+</code></pre></div>
+<p>Selenium jar can be downloaded at the following <a href="http://selenium-release.storage.googleapis.com/index.html">URL</a>, antes de escribir nuestro test de ejemplo hay que establecer la configuración de nuestro archivo nightwatch.json (muy sencilla por cierto):</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{
+  &quot;src_folders&quot; : [&quot;tests&quot;], // Test folder
+
+  // Default configuration for Selenium
+  &quot;selenium&quot; : {
+    &quot;start_process&quot; : true,
+    &quot;start_session&quot; : true,
+    &quot;server_path&quot; : &quot;bin/selenium-server-standalone-{VERSION}.jar&quot;,
+    &quot;host&quot; : &quot;127.0.0.1&quot;,
+    &quot;port&quot; : 4444
+  },
+
+  // Default configuration for tests
+  &quot;test_settings&quot; : {
+    &quot;default&quot; : {
+      &quot;launch_url&quot; : &quot;http://localhost&quot;,
+      &quot;selenium_port&quot;  : 4444,
+      &quot;selenium_host&quot;  : &quot;localhost&quot;,
+      &quot;silent&quot;: true,
+      &quot;screenshots&quot; : {
+        &quot;enabled&quot; : false,
+        &quot;path&quot; : &quot;&quot;
+      },
+     // Browser configuration
+      &quot;desiredCapabilities&quot;: {
+        &quot;browserName&quot;: &quot;firefox&quot;,
+        &quot;javascriptEnabled&quot;: true,
+        &quot;acceptSslCerts&quot;: true
+      }
+    }
+  }
+}
+</code></pre></div>
+<p>Well now that we have the settings, we can write our simple test that simply visits the Nightwatch page through google.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span>  <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;Find nightwatch in google&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">browser</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">browser</span>
+      <span class="p">.</span><span class="nx">url</span><span class="p">(</span><span class="s1">&#39;https://www.google.com.mx/&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">waitForElementVisible</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">setValue</span><span class="p">(</span><span class="s1">&#39;input[type=text]&#39;</span><span class="p">,</span> <span class="s1">&#39;nightwatchjs&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">waitForElementVisible</span><span class="p">(</span><span class="s1">&#39;button[name=btnG]&#39;</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="s1">&#39;button[name=btnG]&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">pause</span><span class="p">(</span><span class="mi">4000</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="s1">&#39;.srg .g:first-child h3 a&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">waitForElementVisible</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">assert</span><span class="p">.</span><span class="nx">containsText</span><span class="p">(</span><span class="s1">&#39;.jumbotron h1&#39;</span><span class="p">,</span> <span class="s1">&#39;Nightwatch&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>As you can see in the code, there are two kinds of methods, one that belongs to the browser object (to perform commands, eg click, pause, etc) and others belonging to assert object (to make assertions) and each has a descriptive name according to their function.</p>
+
+<p>In all methods, in order to locate the elements on the page, CSS selectors are used, but we are not limited to them, you can also use <a href="http://doc.scrapy.org/en/0.12/topics/selectors.html">XPath</a> selectors.</p>
+
+<p>All that remains is to run our test and see how Nightwatch works. For that, we go to the root of our project in our terminal and run:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>nightwatch
+</code></pre></div>
+<p>As you can see, after running our test, it opened a new browser window indicated in our configuration file (firefox in our case). In addition, actions outlined in our test were executed, and the results sent to our terminal.</p>
+
+<p>This was just a small example of how Nightwatch works but clearly not everything that can be done, the possibilities of this framework are many, such as creating our own methods of assertions, our own methods of commands, running our tests in parallel (in different browsers at the same time) and much more, but we&#39;ll see that in a future post, if you want to investigate further and review the list of methods of assertions and commands you can visit the <a href="http://nightwatchjs.org/api">API</a> documentation Nightwatch.</p>
+
+
+  <!-- POST NAVIGATION -->
+  <div class="postNav clearfix">
+    
+      <a class="prev" href="/15/07/yeoman-gulp-grunt"><span>&laquo;&nbsp;Front-end App Scaffolding with Yeoman, Grunt and Gulp</span>
+      
+    </a>
+    
+    
+      <a class="next" href="/15/07/nodejs-and-iojs-with-nvm"><span>Managing node.js and io.js with nvm&nbsp;&raquo;</span>
+      
+      </a>
+    
+  </div>
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2015 <a href="http://vincoorbis.com">vinco orbis</a><br>
+        Powered by <a href="http://jekyllrb.com">Jekyll</a><br>
+        <a href="http://brianmaierjr.com/long-haul/">Long Haul theme</a></p>
+      <p class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br>
+        This work is licensed under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br>
+
+      <div class="footer-links">
+         <ul class="noList">
+            
+            
+            
+
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- end .footer -->
+<script src='/scripts/vendor.js'></script>
+
+<script src='/scripts/main.js'></script>
+
+
+</body>
+
+</html>

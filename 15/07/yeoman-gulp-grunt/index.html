@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Front-end App Scaffolding with Yeoman, Grunt and Gulp</title>
+    <meta name="description" content="We're a bunch of guys working at vincoorbis doing front-end stuff
+">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel='stylesheet' href='/styles/vendor.css'>
+
+    <link rel='stylesheet' href='/styles/main.css'>
+    <link rel="canonical" href="http://zesk8.github.io/15/07/yeoman-gulp-grunt">
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Frontend VO Blog</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 We're a bunch of guys working at vincoorbis doing front-end stuff
+                 <a id="a-icons" href="http://twitter.com/vincoorbis"><i class="fa fa-twitter"></i></a>
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+  
+  <h1 class="postTitle">Front-end App Scaffolding with Yeoman, Grunt and Gulp</h1>
+  <p class="meta">July 16, 2015 | <span class="time">6</span> Minute Read</p>
+
+  <p><strong><a href="http://yeoman.io">Yeoman</a></strong> is a node-based tool for scaffolding new apps, whether they are simple web apps or complete full-stack solutions using pretty much any technology available. It works along with <em>generators</em>, which are responsible for most of the scaffolding itself, as well as providing some degree of customization.</p>
+
+<p>Installing yeoman can be done like the following. Most generators also make use of <a href="http://bower.io">bower</a>, along with either <a href="http://gruntjs.com">grunt</a> or <a href="http://gulpjs.com">gulp</a>, so we might as well do it all at once:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>npm install -g yo grunt gulp
+</code></pre></div>
+<h2 id="generators">Generators</h2>
+
+<p>A <strong>generator</strong> is what does most of the work in scaffolding a project. Generators are responsible for setting up the directory structure, preparing the files, customizing the app based on user prompts, and even setting up external or additional tools to work with the generated code.</p>
+
+<p>Generators can be found on <a href="http://yeoman.io/generators">yeoman&#39;s</a> website, or just by searching the npm registry for <code>yeoman generator</code>. They can be installed either globally or locally if you prefer to keep dependencies contained.</p>
+
+<p>After installing a generator, it&#39;s used with the <code>yo</code> command:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>npm install -g generator-&lt;name&gt;
+<span class="c"># ...</span>
+<span class="nv">$ </span>yo &lt;name&gt;
+</code></pre></div>
+<p>Some generators also have <em>subtasks</em> for creating new components, routes, or other framework-related tasks, like in <a href="https://github.com/yeoman/generator-angular">generator-angular</a> (<code>yo angular:controller</code>, <code>yo angular:directive</code>, etc.) or <a href="https://github.com/yeoman/generator-polymer">generator-polymer</a> (<code>yo polymer:element</code>, <code>yo polymer:seed</code>)</p>
+
+<p>Yeoman even provides its own <a href="https://github.com/yeoman/generator-generator">generator-generator</a>, which scaffolds an actual yeoman generator if you can&#39;t find one that satisfies your needs.</p>
+
+<h2 id="a-quick-example">A quick example</h2>
+
+<p>Let&#39;s say we want a quick and simple webapp. The basic generators by the yeoman team are <a href="https://github.com/yeoman/generator-webapp">generator-webapp</a> (which uses grunt) and <a href="https://github.com/yeoman/generator-gulp-webapp">generator-gulp-webapp</a> (which uses gulp). We can install them both:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>npm install -g generator-webapp generator-gulp-webapp
+</code></pre></div>
+<p>And then set up a new webapp:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>mkdir -p ~/Dev/my-webapp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$_</span>
+<span class="nv">$ </span>yo webapp <span class="c"># or gulp-webapp for the gulp version</span>
+</code></pre></div>
+<p>This presents us with a prompt that allows us to select whether to use sass (instead of plain css), bootstrap, and modernizr (other generators may present you with different choices, or none at all):</p>
+
+<p><img src="/images/Screenshot%202015-07-13%2018.30.31.png" alt="yeoman prompt"></p>
+
+<p>After choosing options, yeoman will go ahead and install everything it needs (as specified by the generator). Since this generator uses grunt and grunt plugins, as well as bower to manage browser packages, it will also do <code>npm install</code> and <code>bower install</code>.</p>
+
+<p>When all&#39;s said and done, the final directory structure will be similar to this:</p>
+
+<p><img src="/images/Screenshot%202015-07-13%2018.42.40.png" alt="all the files"></p>
+
+<p>And you can start working on the <code>app</code> directory and run <code>grunt serve</code> or anything else you need.</p>
+
+<h2 id="grunt-and-gulp">Grunt and Gulp</h2>
+
+<p><strong><a href="http://gruntjs.com">Grunt</a></strong> and <strong><a href="http://gulpjs.com">Gulp</a></strong> are node-based task runners that work with a <a href="http://gruntjs.com/plugins">plethora</a> of <a href="http://gulpjs.com/plugins/">plugins</a>, and are very commonly used as part of yeoman generators, although they can also be used on their own. The tasks that are available depend on the generator used, but common tasks include:</p>
+
+<ul>
+<li>Creating a light-weight, temporary web server to preview the webapp (and open your browser automatically), and reload browsers when changes are made</li>
+<li>Watching project files to trigger other tasks on save (compile coffeescript/sass files or linting javascript files, for example)</li>
+<li>Building a project to generate an optimized er... build, with concatenated/minified javascript, CSS and HTML, suitable for serving directly</li>
+<li>Run test suites on your app, using test frameworks such as mocha or jasmine</li>
+</ul>
+
+<p>Tasks are available via the terminal:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>grunt <span class="c"># same as grunt default</span>
+<span class="nv">$ </span>grunt serve
+<span class="nv">$ </span>grunt build
+<span class="nv">$ </span>grunt <span class="nb">test</span>
+</code></pre></div>
+<p>or, for gulp:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>gulp <span class="c"># same as gulp default</span>
+<span class="nv">$ </span>gulp serve
+<span class="nv">$ </span>gulp build
+<span class="nv">$ </span>gulp <span class="nb">test</span>
+</code></pre></div>
+<p>In addition, both have the ability to use CoffeeScript for its configuration file (for gulp, since v3.9.0). All that is needed (aside from the actual gruntfile.coffee or gulpfile.coffee) is that you install the interpreter:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>npm install coffee-script
+</code></pre></div>
+<h2 id="differences-between-grunt-and-gulp">Differences between grunt and gulp</h2>
+
+<p>The main difference between grunt and gulp is the configuration file: <code>gruntfile.js</code> and <code>gulpfile.js</code>. In general, grunt is very configuration-heavy, while gulp is more declarative. I&#39;ll explain what this means in the next couple of sections, but suffice to say the choice of either grunt or gulp is mostly personal and depends largely on what one feels more comfortable working with.</p>
+
+<h3 id="grunt">Grunt</h3>
+
+<p><strong>Grunt</strong> configures its tasks as an array of plugins to call and work on files, one plugin at a time. Plugins can be configured with a &#39;global&#39; set of options, and also a specific set of options depending on the <em>target</em> specified when running grunt (or any specific task). This can be used, for example, to compile sass in expanded mode and with sourcemaps when developing, but in compressed mode without sourcemaps when doing a build.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// grunt.initConfig</span>
+<span class="nx">clean</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// No default options for this one</span>
+  <span class="nx">dist</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// options for the dist target, e.g. grunt build calls clean:dist</span>
+    <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+      <span class="nx">dot</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">src</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;.tmp&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;&lt;%= config.dist %&gt;/*&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;!&lt;%= config.dist %&gt;/.git*&#39;</span>
+      <span class="p">]</span>
+    <span class="p">}]</span>
+  <span class="p">},</span>
+  <span class="nx">server</span><span class="o">:</span> <span class="s1">&#39;.tmp&#39;</span> <span class="c1">// server target; grunt serve calls clean:server</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Grunt tasks are all run sequentially; that is, they run in the order in which they exist in the gruntfile, and only one at a time. This allows each task to finish completely before the next task is over. The downside of this is that for tasks that don&#39;t depend on other tasks, this approach is slower, but it can be mitigated with plugins like <a href="https://github.com/sindresorhus/grunt-concurrent">grunt-concurrent</a>.</p>
+
+<h3 id="gulp">Gulp</h3>
+
+<p><strong>Gulp</strong>&#39;s main advantage is that it&#39;s much more declarative, and therefore more terse. It can be used to configure arbitrary tasks:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">gulp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">sass</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-sass&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">autoprefixer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-autoprefixer&#39;</span><span class="p">);</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;copyFiles&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sass&#39;</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(){</span>
+  <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">([</span>
+    <span class="s1">&#39;source/**/*&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;!source/sass/**/*&#39;</span>
+  <span class="p">],</span> <span class="p">{</span><span class="nx">dot</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;sass&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(){</span>
+  <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;source/sass/**/*.scss&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">sass</span><span class="p">.</span><span class="nx">sync</span><span class="p">({</span>
+      <span class="nx">outputStyle</span><span class="o">:</span> <span class="s1">&#39;expanded&#39;</span><span class="p">,</span>
+      <span class="nx">precision</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+      <span class="nx">includePaths</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;sass-includes&#39;</span><span class="p">]</span>
+    <span class="p">}))</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">autoprefixer</span><span class="p">({</span><span class="nx">browsers</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;last 2 versions&#39;</span><span class="p">]}))</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;target/styles&#39;</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;copyFiles&#39;</span><span class="p">]);</span>
+</code></pre></div>
+<p>Gulp works with files in <em>streams</em>, which means that it can read them (via <code>gulp.src</code>) and the contents piped through other gulp plugins, in a very similar way to how pipes work in unix systems, with the stream being written only after explicitely written (with <code>gulp.dest</code>). Configuration for each plugin is also done at that point (as you can see for the sass plugin).</p>
+
+<p>Unlike grunt, gulp tasks can have explicit dependent tasks, and one task may depend on multiple other tasks, to be run after these dependencies are finished. In this case, gulp runs all the tasks concurrently, so tasks such as compilation and image optimization can run simultaneously.</p>
+
+<p>However, gulp can&#39;t (yet) run tasks in an arbitrary order like grunt does, without having potentially complicated chains of dependencies. This too can also be solved with the <a href="https://github.com/OverZealous/run-sequence">run-sequence</a> plugin.</p>
+
+<p>On top of everything, gulp is able (thanks to <a href="https://github.com/tkellen/js-interpret">js-interpret</a>) to read its configuration in any of the supported languages specified <a href="https://github.com/tkellen/js-interpret/blob/master/index.js">here</a>, provided the relevant interpreter is installed. For example, the package <code>babel-core</code> will allow gulp to read from a <code>gulpfile.babel.js</code> file with ES6 syntax.</p>
+
+
+  <!-- POST NAVIGATION -->
+  <div class="postNav clearfix">
+    
+      <a class="prev" href="/15/07/welcome-to-jekyll"><span>&laquo;&nbsp;Welcome to Jekyll!</span>
+      
+    </a>
+    
+    
+      <a class="next" href="/15/07/nightwatch"><span>Nightwatch.js&nbsp;&raquo;</span>
+      
+      </a>
+    
+  </div>
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2015 <a href="http://vincoorbis.com">vinco orbis</a><br>
+        Powered by <a href="http://jekyllrb.com">Jekyll</a><br>
+        <a href="http://brianmaierjr.com/long-haul/">Long Haul theme</a></p>
+      <p class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br>
+        This work is licensed under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br>
+
+      <div class="footer-links">
+         <ul class="noList">
+            
+            
+            
+
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- end .footer -->
+<script src='/scripts/vendor.js'></script>
+
+<script src='/scripts/main.js'></script>
+
+
+</body>
+
+</html>

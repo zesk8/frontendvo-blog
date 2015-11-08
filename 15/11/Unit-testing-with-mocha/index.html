@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Unit testing with Mocha</title>
+    <meta name="description" content="We're a bunch of guys working at vincoorbis doing front-end stuff
+">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel='stylesheet' href='/styles/vendor.css'>
+
+    <link rel='stylesheet' href='/styles/main.css'>
+    <link rel="canonical" href="http://zesk8.github.io/15/11/Unit-testing-with-mocha">
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Frontend VO Blog</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 We're a bunch of guys working at vincoorbis doing front-end stuff
+                 <a id="a-icons" href="http://twitter.com/vincoorbis"><i class="fa fa-twitter"></i></a>
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+  
+  <h1 class="postTitle">Unit testing with Mocha</h1>
+  <p class="meta">November 07, 2015 | <span class="time">4</span> Minute Read</p>
+
+  <p>Currently testing has become an essential part of every development, it helps us to detect errors in an automatized way, we only need to write our suite test and every time we want to test our application we only run a simple command, There are different types of testing, such as:</p>
+
+<ul>
+<li>End-to-End testing</li>
+<li>Integration testing</li>
+<li>Functional testing</li>
+<li>Unit testing</li>
+</ul>
+
+<p>But in this post we&#39;ll focus on unit testing which are in charge of testing our code as a unit that we define, in this case a unit will be a javascript function.</p>
+
+<p>In this post we&#39;ll learn how to write tests with Mocha and use Phantom.js to run our tests.</p>
+
+<p>First of all we need to install our dependencies:</p>
+
+<p>Phantom.js:</p>
+
+<p>The easiest way to install phantom (in OS X) is through <a href="http://brew.sh/">Homebrew</a>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ brew install phantomjs
+</code></pre></div>
+<p>If you are using a different OS, you can install the <a href="http://phantomjs.org/download.html">binary</a></p>
+
+<p>mocha-phantomjs:</p>
+
+<p>We&#39;ll use this module to run our mocha tests through phantom, we install it through npm:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ npm install -g mocha-phantomjs
+</code></pre></div>
+<p>Our project structure will be like this:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">├── tests/
+|   └── test.js
+├── index.html
+└── package.json
+</code></pre></div>
+<p>In our package.json we define mocha and chai:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;mocha&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;main&quot;</span><span class="o">:</span> <span class="s2">&quot;index.js&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;test&quot;</span><span class="o">:</span> <span class="s2">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;mocha&quot;</span><span class="o">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;chai&quot;</span> <span class="o">:</span> <span class="s2">&quot;*&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;ISC&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Our index.html will have the configuration for mocha:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span> Tests <span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;./node_modules/mocha/mocha.css&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;mocha&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;./node_modules/mocha/mocha.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;./node_modules/chai/chai.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="c">&lt;!-- Inital configuration for mocha --&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+            <span class="nx">mocha</span><span class="p">.</span><span class="nx">ui</span><span class="p">(</span><span class="s1">&#39;bdd&#39;</span><span class="p">);</span>
+            <span class="nx">mocha</span><span class="p">.</span><span class="nx">reporter</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
+        <span class="nt">&lt;/script&gt;</span>
+        <span class="c">&lt;!-- Our test --&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;test/test.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="c">&lt;!-- Run mocha through phantom or in browser--&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">mochaPhantomJS</span><span class="p">)</span> <span class="p">{</span> <span class="nx">mochaPhantomJS</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span> <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span> <span class="nx">mocha</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span> <span class="p">}</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>Our script file:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">saySomething</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot; wants to say: &quot;</span> <span class="o">+</span> <span class="nx">word</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">})();</span>
+</code></pre></div>
+<p>Our script is a simple self invoked function with a main function and a prototype function which return a string with the values passed to both functions, our main function (and its prototype function) will be our unit to test.</p>
+
+<p>And our test will look like this:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Person&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;constructor&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test if our function person has a default value for variable name, this test will fail</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should have a default name&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Jimi&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="c1">// Test if the initial value is the same after call the variable directly</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should set person&#39;s name&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s2">&quot;Daniel&quot;</span><span class="p">);</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">&quot;Daniel&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+  <span class="c1">// Test if the return message is correct</span>
+  <span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;say something&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should say something&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Daniel&#39;</span><span class="p">).</span><span class="nx">saySomething</span><span class="p">(</span><span class="s1">&#39;Hi Friends!!&#39;</span><span class="p">);</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">person</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s2">&quot;Daniel wants to say: Hi Friends!!&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Let&#39;s dive into our code test:</p>
+
+<p><strong>describe</strong> - The main purpose for the <strong>describe</strong> function is grouping test cases, we can think of these functions as containers, we see two <strong>describe</strong> functions inside the first one, in that case they have the same purpose, serve as containers, our first <strong>describe</strong> function is our container for all our tests, and the second ones are containers for a specific group of test.</p>
+
+<p><strong>it</strong> - Function to write a test case, inside every <strong>it</strong> function we&#39;ll put our assertions commands for our test case.</p>
+
+<p>Inside our <strong>it</strong> function there&#39;re some assertions commands from chai library</p>
+
+<p><strong>expect</strong> - With chai we can write our test in two different styles, assertion style and BDD style, in this case we use a BDD style exposed through <strong>expect</strong> function, we use BDD style because it provides us a more descriptive methods at the moment to read our test, but if you want to know more about the different styles, you can check the <a href="http://chaijs.com/guide/styles/">documentation</a>.</p>
+
+<h2 id="run-our-tests">Run our tests</h2>
+
+<p>In the root of our folder we type this into our console:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mocha-phantomjs index.html
+</code></pre></div>
+<p>and in our console we&#39;ll see the results:</p>
+
+<p><img src="/images/mocha-test.png" alt="Mocha test">  </p>
+
+<p>As you can see, it is really easy to test our code using mocha, chai and phantom and now we can write tests for our projects, a more advanced use could be, using phantom.js in a different server where we&#39;ll run our tests and use something like <a href="https://jenkins-ci.org/">Jenkins</a> for reporting results.</p>
+
+
+  <!-- POST NAVIGATION -->
+  <div class="postNav clearfix">
+    
+      <a class="prev" href="/15/09/create-your-first-emberjs-app"><span>&laquo;&nbsp;Create your first emberjs application</span>
+      
+    </a>
+    
+    
+  </div>
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2015 <a href="http://vincoorbis.com">vinco orbis</a><br>
+        Powered by <a href="http://jekyllrb.com">Jekyll</a><br>
+        <a href="http://brianmaierjr.com/long-haul/">Long Haul theme</a></p>
+      <p class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br>
+        This work is licensed under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br>
+
+      <div class="footer-links">
+         <ul class="noList">
+            
+            
+            
+
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- end .footer -->
+<script src='/scripts/vendor.js'></script>
+
+<script src='/scripts/main.js'></script>
+
+
+</body>
+
+</html>

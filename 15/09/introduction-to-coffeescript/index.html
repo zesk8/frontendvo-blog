@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Introduction to CoffeeScript</title>
+    <meta name="description" content="We're a bunch of guys working at vincoorbis doing front-end stuff
+">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel='stylesheet' href='/styles/vendor.css'>
+
+    <link rel='stylesheet' href='/styles/main.css'>
+    <link rel="canonical" href="http://zesk8.github.io/15/09/introduction-to-coffeescript">
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Frontend VO Blog</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 We're a bunch of guys working at vincoorbis doing front-end stuff
+                 <a id="a-icons" href="http://twitter.com/vincoorbis"><i class="fa fa-twitter"></i></a>
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+  
+  <h1 class="postTitle">Introduction to CoffeeScript</h1>
+  <p class="meta">September 01, 2015 | <span class="time">5</span> Minute Read</p>
+
+  <p>CoffeeScript is the most used pre-compiled language to code in javascript. In this post we cover some basic aspects about CoffeeScript and why it&#39;s so attractive to many developers.</p>
+
+<h3 id="pros-and-cons">Pros and cons</h3>
+
+<p>Some benefits of using CoffeeScript are:</p>
+
+<ul>
+<li>code in a more readable syntax</li>
+<li>code is more easy to maintain</li>
+<li>apply best practices at the moment of campilation</li>
+<li>shorter development time</li>
+<li>no more &quot;;&quot;</li>
+<li>a complete class system</li>
+<li>identation is part of the language</li>
+</ul>
+
+<p>On the other hand many people mention some disadvantages of using CoffeeScript:</p>
+
+<ul>
+<li>A compilation step is necessary (we can use a yeoman generator to deal with this)</li>
+<li>difficult to debug (solved with source maps)</li>
+<li>difficult to learn (not really, with 2 hours of reading <a href="http://arcturo.github.io/library/coffeescript/">The Little Book on CoffeeScript</a> we can learn a lot)</li>
+</ul>
+
+<p>As we can see there is really no disadvantages to using CoffeeScript, in fact, a technical reason not to use it doesn&#39;t exist. But one important thing to consider is that CoffeeScript isn&#39;t a substitute to learning javascript <strong>it&#39;s just a beautiful way to write javascript</strong>.</p>
+
+<h3 id="general-overview">General overview</h3>
+
+<h4 id="variables">Variables</h4>
+
+<p>We don&#39;t have to use the keyword <strong>var</strong>, CoffeeScript automatically adds this for us at the moment of campilation, so we don&#39;t have to worry about variable hoisting or undeclared variables.</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="c1"># string</span>
+<span class="nv">foo = </span><span class="s">&#39;bar&#39;</span>
+
+<span class="c1"># number</span>
+<span class="nv">num = </span><span class="mi">4000</span>
+
+<span class="c1"># boolean, instead of true or false values we can use more descriptive words: is, yes, not, isnt</span>
+<span class="nv">isTrue = </span><span class="kc">true</span> 
+
+<span class="c1">#array</span>
+<span class="nv">numbers = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="c1">#objects</span>
+<span class="nv">student =</span>
+  <span class="nv">height: </span><span class="s">&#39;1.65 m&#39;</span>
+  <span class="nv">age: </span><span class="mi">33</span>
+  <span class="nv">gender: </span><span class="s">&#39;male&#39;</span>
+  <span class="nv">brothers: </span><span class="p">[</span><span class="s">&#39;Jess&#39;</span><span class="p">,</span> <span class="s">&#39;Tom&#39;</span><span class="p">]</span>
+</code></pre></div>
+<p>In CoffeeScript we can assign values from an array to differente variables:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="p">[</span><span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="c1"># compile in: va ref = [1, 2], var foo = ref[0], var bar = ref[1];</span>
+</code></pre></div>
+<h4 id="arrays">Arrays</h4>
+
+<p>Arrays don&#39;t suffer great changes, the easiest way to declare an array is:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">numbers = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div>
+<p>But if we have an array with multiples values, we can declare our array like this:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="c1"># note that at the end of every line there isn&#39;t a comma, CoffeeScript does it for us.</span>
+<span class="nv">numbers = </span><span class="p">[</span>
+  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+  <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span>
+  <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span>
+  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>Also we can define an array with a range:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">range = </span><span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="mi">5</span><span class="p">]</span> <span class="c1"># compile in: var range = [1, 2, 3, 4, 5]</span>
+</code></pre></div>
+<h4 id="objects">Objects</h4>
+
+<p>To define an object, we don&#39;t need curly braces instead of that, we use indentation to define our object.</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">student =</span>
+  <span class="nv">height: </span><span class="s">&#39;1.65 m&#39;</span>
+  <span class="nv">age: </span><span class="mi">33</span>
+  <span class="nv">gender: </span><span class="s">&#39;male&#39;</span>
+  <span class="nv">brothers: </span><span class="p">[</span><span class="s">&#39;Jess&#39;</span><span class="p">,</span> <span class="s">&#39;Tom&#39;</span><span class="p">]</span>
+</code></pre></div>
+<h4 id="conditionals">Conditionals</h4>
+
+<p>In conditionals we can use more descriptive words:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">test = </span><span class="kc">true</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">test</span> <span class="o">is</span> <span class="kc">true</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">&#39;is true&#39;</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">test</span> <span class="o">isnt</span> <span class="kc">true</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">&#39;is not true&#39;</span><span class="p">);</span>
+
+<span class="c1"># a ternary operation</span>
+<span class="nv">result = </span><span class="k">if</span> <span class="nx">test</span> <span class="k">then</span> <span class="s">&#39;is true&#39;</span> <span class="k">else</span> <span class="s">&#39;is not true&#39;</span>
+</code></pre></div>
+<h4 id="loops">Loops</h4>
+
+<p>To loop through an array:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="k">for</span> <span class="nx">num</span> <span class="k">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="mi">5</span><span class="p">]</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span>
+</code></pre></div>
+<p>To loop through an object:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">people =</span>
+  <span class="nv">tom: </span><span class="mi">31</span>
+  <span class="nv">billy: </span><span class="mi">25</span>
+  <span class="nv">jess: </span><span class="mi">19</span>
+
+<span class="k">for</span> <span class="nx">person</span><span class="p">,</span> <span class="nx">age</span> <span class="k">of</span> <span class="nx">people</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span> <span class="o">+</span> <span class="s">&#39;is&#39;</span> <span class="o">+</span> <span class="nx">age</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="functions">Functions</h4>
+
+<p>To define a function we don&#39;t need the keyword <strong>function</strong> and also we don&#39;t need curly braces, to define the body of our function we use <strong>-&gt;</strong>.</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">foo = </span><span class="nf">-&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">)</span>
+
+<span class="c1"># with parameters:</span>
+<span class="nv">foo = </span><span class="nf">(bar) -&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">)</span>
+
+<span class="c1"># with parameters initialized</span>
+<span class="nv">foo = </span><span class="nf">(bar = &#39;start&#39;) -&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="interpolation-string">Interpolation string</h4>
+
+<p>Quotes aren&#39;t only used to define strings, we can interpolate strings with them if we use simple quotes, anything we put inside them will be treat as a string:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">word = </span><span class="s">&#39;123 - this is a simple...string!!&#39;</span>
+</code></pre></div>
+<p>But if we use double quotes we can use a special syntax to concatenate variables with strings:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">age = </span><span class="mi">24</span>
+<span class="nv">name = </span><span class="nx">daniel</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s"> is </span><span class="si">#{</span><span class="nx">age</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span> <span class="c1"># compile into: console.log(name + &quot; is &quot; + age)</span>
+</code></pre></div>
+<p>And if we use triple double quotes we can write strings blocks and they can maintain their indentation:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="nv">text = </span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">  line one</span>
+<span class="s">  line two</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="c1"># print: line one\nline two</span>
+</code></pre></div>
+<h4 id="classes">Classes</h4>
+
+<p>CoffeeScript has an excellent abstraction of prototypal inheritance, so we can use <strong>classes</strong> in javascript, we don&#39;t have to deal with prototypes, CoffeeScript does the hard work for us and implement the best practices, let&#39;s check an example:</p>
+<div class="highlight"><pre><code class="language-coffee" data-lang="coffee"><span class="k">class</span> <span class="nx">Animal</span>
+  <span class="nv">constructor: </span><span class="nf">(@name) -&gt;</span>
+
+  <span class="nv">move: </span><span class="nf">(meters) -&gt;</span>
+    <span class="nx">alert</span> <span class="nx">@name</span> <span class="o">+</span> <span class="s">&quot; moved &quot;</span> <span class="o">+</span> <span class="nx">meters</span> <span class="o">+</span> <span class="s">&quot;m.&quot;</span>
+
+<span class="k">class</span> <span class="nx">Snake</span> <span class="k">extends</span> <span class="nx">Animal</span>
+  <span class="nv">move: </span><span class="nf">-&gt;</span>
+    <span class="nx">alert</span> <span class="s">&quot;Slithering...&quot;</span>
+    <span class="k">super</span> <span class="mi">5</span>
+
+<span class="k">class</span> <span class="nx">Horse</span> <span class="k">extends</span> <span class="nx">Animal</span>
+  <span class="nv">move: </span><span class="nf">-&gt;</span>
+    <span class="nx">alert</span> <span class="s">&quot;Galloping...&quot;</span>
+    <span class="k">super</span> <span class="mi">45</span>
+
+<span class="nv">sam = </span><span class="k">new</span> <span class="nx">Snake</span> <span class="s">&quot;Sammy the Python&quot;</span>
+<span class="nv">tom = </span><span class="k">new</span> <span class="nx">Horse</span> <span class="s">&quot;Tommy the Palomino&quot;</span>
+</code></pre></div>
+<p>In the code above we see some interesting things:</p>
+
+<ul>
+<li><strong>@name</strong> : this is the short code for: <strong>this.name</strong></li>
+<li>A parent class (Animal) exists as well as 2 classes (Snake, Horse) which extend the parent class</li>
+<li><strong>extends</strong> : the keyword to extend a class</li>
+<li>In both sub-classes we can see that both overwrite the move method and inside of them we see the keyword <strong>super</strong> which is the reference of the parent method.</li>
+</ul>
+
+<p>If we put the compiled code in a browser console we&#39;ll see that works perfectly.</p>
+
+<h4 id="conclusion">Conclusion</h4>
+
+<p>CoffeeScript is a great tool which helps us improve our work and save development time, if you want to learn more about CoffeeScript you can check their own <a href="http://coffeescript.org/">site</a>.</p>
+
+
+  <!-- POST NAVIGATION -->
+  <div class="postNav clearfix">
+    
+      <a class="prev" href="/15/08/quick-start-with-electron"><span>&laquo;&nbsp;Quick start with Electron</span>
+      
+    </a>
+    
+    
+      <a class="next" href="/15/09/create-your-first-emberjs-app"><span>Create your first emberjs application&nbsp;&raquo;</span>
+      
+      </a>
+    
+  </div>
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2015 <a href="http://vincoorbis.com">vinco orbis</a><br>
+        Powered by <a href="http://jekyllrb.com">Jekyll</a><br>
+        <a href="http://brianmaierjr.com/long-haul/">Long Haul theme</a></p>
+      <p class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br>
+        This work is licensed under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br>
+
+      <div class="footer-links">
+         <ul class="noList">
+            
+            
+            
+
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- end .footer -->
+<script src='/scripts/vendor.js'></script>
+
+<script src='/scripts/main.js'></script>
+
+
+</body>
+
+</html>

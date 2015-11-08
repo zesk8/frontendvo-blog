@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Managing node.js and io.js with nvm</title>
+    <meta name="description" content="We're a bunch of guys working at vincoorbis doing front-end stuff
+">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel='stylesheet' href='/styles/vendor.css'>
+
+    <link rel='stylesheet' href='/styles/main.css'>
+    <link rel="canonical" href="http://zesk8.github.io/15/07/nodejs-and-iojs-with-nvm">
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Frontend VO Blog</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 We're a bunch of guys working at vincoorbis doing front-end stuff
+                 <a id="a-icons" href="http://twitter.com/vincoorbis"><i class="fa fa-twitter"></i></a>
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+  
+  <h1 class="postTitle">Managing node.js and io.js with nvm</h1>
+  <p class="meta">July 20, 2015 | <span class="time">2</span> Minute Read</p>
+
+  <p>We use <a href="https://nodejs.org">node.js</a> a lot (and <a href="https://iojs.org">io.js</a> to a lesser degree) when doing development, powering a good portion of our toolkit like our <a href="http://gruntjs.com">grunt</a> and <a href="http://gulpjs.com">gulp</a> workflows, as well as running node.js itself as a server.</p>
+
+<p>Because of the fast pace of development in these two projects, sometimes we also find ourselves having to juggle various node.js/io.js versions by installing or uninstalling quite a few times, or even resorting to virtualization tools like <a href="http://vagrantup.com">vagrant</a> or <a href="https://docker.io">docker</a> to lock a project down to a given node.js/io.js version.</p>
+
+<p><a href="https://github.com/creationix/nvm">nvm</a> is a different solution. It&#39;s simply a helper bash script (for POSIX systems) that installs node.js/io.js into its own directory, as a subdirectory of nvm&#39;s install dir:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>nvm install v0.12.7
+<span class="c"># ...</span>
+<span class="nv">$ </span>which node
+/home/nsdragon/Development/nvm/versions/node/v0.12.7/bin/node
+<span class="c"># nvm is installed to /home/nsdragon/Development/nvm</span>
+</code></pre></div>
+<p>This also allows us to run <code>npm install -g</code> without the need for superuser privileges:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>npm install -g coffee-script
+/home/nsdragon/Development/nvm/versions/node/v0.12.7/bin/coffee -&gt; /home/nsdragon/Development/nvm/versions/node/v0.12.7/lib/node_modules/coffee-script/bin/coffee
+/home/nsdragon/Development/nvm/versions/node/v0.12.7/bin/cake -&gt; /home/nsdragon/Development/nvm/versions/node/v0.12.7/lib/node_modules/coffee-script/bin/cake
+coffee-script@1.9.3 /home/nsdragon/Development/nvm/versions/node/v0.12.7/lib/node_modules/coffee-script
+<span class="nv">$ </span>which coffee
+/home/nsdragon/Development/nvm/versions/node/v0.12.7/bin/coffee
+</code></pre></div>
+<h2 id="managing-versions">Managing versions</h2>
+
+<p>Aside from the obvious convenience that this provides, nvm is also able to manage, install and switch between versions:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>nvm install iojs-v2.4.0  <span class="c"># Install io.js v2.4.0</span>
+<span class="c"># ...</span>
+
+<span class="nv">$ </span>nvm ls                   <span class="c"># Shows versions installed</span>
+    iojs-v2.4.0
+-&gt;      v0.12.7
+default -&gt; v0.12.7
+node -&gt; stable <span class="o">(</span>-&gt; v0.12.7<span class="o">)</span> <span class="o">(</span>default<span class="o">)</span>
+stable -&gt; 0.12 <span class="o">(</span>-&gt; v0.12.7<span class="o">)</span> <span class="o">(</span>default<span class="o">)</span>
+iojs -&gt; iojs-v2.4 <span class="o">(</span>-&gt; iojs-v2.4.0<span class="o">)</span> <span class="o">(</span>default<span class="o">)</span>
+
+<span class="nv">$ </span>nvm ls-remote            <span class="c"># Shows all versions available for install</span>
+<span class="c"># ...</span>
+
+<span class="nv">$ </span>nvm use iojs-v2.4.0      <span class="c"># Now use what we just installed</span>
+Now using io.js v2.4.0 <span class="o">(</span>npm v2.13.0<span class="o">)</span>
+
+<span class="nv">$ </span>node -v
+v2.4.0
+
+<span class="nv">$ </span>which node
+/home/nsdragon/Development/nvm/versions/io.js/v2.4.0/bin/node
+
+<span class="nv">$ </span>nvm use v0.12.7          <span class="c"># Go back to using node.js v0.12.7</span>
+Now using node v0.12.7 <span class="o">(</span>npm v2.11.3<span class="o">)</span>
+
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;iojs-v2.4.0&#39;</span> &gt; .nvmrc
+<span class="nv">$ </span>nvm use                  <span class="c"># Reads the first .nvmrc file it finds</span>
+Now using io.js v2.4.0 <span class="o">(</span>npm v2.13.0<span class="o">)</span>
+
+<span class="nv">$ </span>nvm <span class="nb">alias </span>default iojs-v2.4.0
+<span class="nv">$ </span>nvm use default          <span class="c"># Set iojs-v2.4.0 as default when opening new shells</span>
+Now using io.js v2.4.0 <span class="o">(</span>npm v2.13.0<span class="o">)</span>
+<span class="nv">$ </span>nvm ls                   <span class="c"># Shows that iojs-v2.4.0 is now default</span>
+-&gt;  iojs-v2.4.0
+        v0.12.7
+default -&gt; iojs-v2.4.0
+node -&gt; stable <span class="o">(</span>-&gt; v0.12.7<span class="o">)</span> <span class="o">(</span>default<span class="o">)</span>
+stable -&gt; 0.12 <span class="o">(</span>-&gt; v0.12.7<span class="o">)</span> <span class="o">(</span>default<span class="o">)</span>
+iojs -&gt; iojs-v2.4 <span class="o">(</span>-&gt; iojs-v2.4.0<span class="o">)</span> <span class="o">(</span>default<span class="o">)</span>
+</code></pre></div>
+<p>Even upgrading and migrating global node modules is straightforward:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>nvm use iojs-v2.4.0
+Now using io.js v2.4.0 <span class="o">(</span>npm v2.13.0<span class="o">)</span>
+<span class="nv">$ </span>nvm reinstall-packages v0.12.7  <span class="c"># Install whatever packages v0.12.7 has</span>
+</code></pre></div>
+<p>All this lets us quickly and easily manage whatever node.js/io.js version our project requires, as well as upgrade easily whenever needed.</p>
+
+
+  <!-- POST NAVIGATION -->
+  <div class="postNav clearfix">
+    
+      <a class="prev" href="/15/07/nightwatch"><span>&laquo;&nbsp;Nightwatch.js</span>
+      
+    </a>
+    
+    
+      <a class="next" href="/15/07/mobile-first"><span>Mobile First&nbsp;&raquo;</span>
+      
+      </a>
+    
+  </div>
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2015 <a href="http://vincoorbis.com">vinco orbis</a><br>
+        Powered by <a href="http://jekyllrb.com">Jekyll</a><br>
+        <a href="http://brianmaierjr.com/long-haul/">Long Haul theme</a></p>
+      <p class="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br>
+        This work is licensed under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br>
+
+      <div class="footer-links">
+         <ul class="noList">
+            
+            
+            
+
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- end .footer -->
+<script src='/scripts/vendor.js'></script>
+
+<script src='/scripts/main.js'></script>
+
+
+</body>
+
+</html>
